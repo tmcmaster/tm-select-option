@@ -9,6 +9,9 @@ window.customElements.define('tm-select-option', class extends LitElement {
       },
       value: {
         type: String
+      },
+      label: {
+        type: String
       }
     };
   }
@@ -35,14 +38,19 @@ window.customElements.define('tm-select-option', class extends LitElement {
                 display: inline-block;
                 box-sizing: border-box;
                 background-color: rgb(244,244,244);
+                padding-bottom: 5px;
             }
             main {
+                display: inline-block;
+                box-sizing: border-box;
                 width: 100%;
                 height: 100%;
                 border-bottom: lightgrey;
                 padding-left: 15px;
+                padding-right: 10px;
             }
             label {
+                display: inline-block;
                 box-sizing: border-box;
                 font-size: 12px;
                 color: gray;
@@ -50,14 +58,15 @@ window.customElements.define('tm-select-option', class extends LitElement {
                 height: 30%;
             }
             select {
-                display: block;
+                display: inline-block;
+                box-sizing: border-box;
                 font-size: 16px;
                 font-family: sans-serif;
                 color: black;
                 line-height: 1;
                 //padding: .6em 1.4em .5em .8em;
-                width: 70%;
-                height: 70%;
+                width: 100%;
+                height: 50%;
                 max-width: 100%;
                 box-sizing: border-box;
                 margin: 0;
@@ -94,10 +103,10 @@ window.customElements.define('tm-select-option', class extends LitElement {
   render() {
     return html`
             <main>
-                <label>Label</label>
+                <label>${this.label}</label>
                 <select id="select" @change="${e => this.selectedChanged()}" value="${this.value}">
-                    <option selected disabled hidden>Type</option>
-                    ${this.options.map(o => html`<option>${o}</option>`)}
+                    <option selected disabled hidden></option>
+                    ${this.options.map(o => html`<option ?selected="${o === this.value}">${o}</option>`)}
                 </select>            
             </main>
         `;
