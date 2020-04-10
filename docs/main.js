@@ -8,7 +8,9 @@ let sites = {
     'docs': 'https://github.com/tmcmaster/tm-select-option#readme'
 };
 
-const OPTIONS = ['a','b','c'];
+const VALUES = ['a','b','c'];
+const TITLES = ['A','B','C'];
+const OPTIONS = {'a': 'AAA','b':'BBB','c':'CCC'};
 
 render(html`
     <style>
@@ -19,16 +21,19 @@ render(html`
     </style>
     <tm-examples heading="tm-select-option" .sites="${sites}">
         <section title="Not Selected">
-            <script>
-                const OPTIONS = ['a','b','c'];
-            </script>
-            <tm-select-option label="Testing" .options="${OPTIONS}"></tm-select-option>
+            <tm-select-option label="Testing" .values="${VALUES}"></tm-select-option>
         </section>
-        <section title="Selected">
-            <script>
-                const OPTIONS = ['a','b','c'];
-            </script>
-            <tm-select-option label="Testing" value="b" .options="${OPTIONS}"></tm-select-option>
+        <section title="Values">
+            <tm-select-option label="Testing" value="b" .values="${VALUES}"></tm-select-option>
+        </section>
+        <section title="Values and Titles">
+            <tm-select-option label="Testing" value="b" .values="${VALUES}" .titles="${TITLES}"></tm-select-option>
+        </section>
+         <section title="Option Map">
+            <tm-select-option label="Testing" value="b" .options="${OPTIONS}" @changed="${e => console.log('New Value: ' + e.detail)}"></tm-select-option>
+        </section>
+        <section title="Array of Options">
+            <tm-select-option label="Testing" value="b" .options="${VALUES}"></tm-select-option>
         </section>
     </tm-examples>
 `, document.querySelector('body'));
