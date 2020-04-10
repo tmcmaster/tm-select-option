@@ -4,7 +4,7 @@
         "build": "npm update && npm run web"
     },
     "dependencies": {
-        "@wonkytech/tm-examples": "^0.1.5",
-        "@wonkytech/tm-select-option": "0.0.4"
+        "@wonkytech/tm-examples": "~0.1",
+        "@wonkytech/tm-select-option": "~0.1"
     }
 }

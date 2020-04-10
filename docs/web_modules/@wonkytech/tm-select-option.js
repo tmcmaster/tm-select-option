@@ -5,6 +5,12 @@ window.customElements.define('tm-select-option', class extends LitElement {
   static get properties() {
     return {
       options: {
+        type: Object
+      },
+      values: {
+        type: Array
+      },
+      labels: {
         type: Array
       },
       value: {
@@ -18,7 +24,9 @@ window.customElements.define('tm-select-option', class extends LitElement {
 
   constructor() {
     super();
-    this.options = [];
+    this.options = undefined;
+    this.values = undefined;
+    this.titles = undefined;
     this.value = undefined;
   }
 
@@ -28,6 +36,32 @@ window.customElements.define('tm-select-option', class extends LitElement {
 
     if (this.value !== undefined) {
       this.selected.value = this.value;
+    }
+
+    if (this.options) {
+      this.values = [];
+      this.titles = [];
+
+      if (Array.isArray(this.options)) {
+        this.values = Object.values(this.options);
+        this.titles = Object.values(this.options);
+      } else {
+        Object.keys(this.options).map(key => {
+          return {
+            key: key,
+            value: this.options[key]
+          };
+        }).sort((a, b) => a.key.localeCompare(b.value)).forEach(option => {
+          this.values.push(option.key);
+          this.titles.push(option.value);
+        });
+        this.requestUpdate();
+      }
+    } else {
+      if (!this.titles) {
+        this.titles = this.values;
+        this.requestUpdate();
+      }
     }
   }
 
@@ -101,12 +135,17 @@ window.customElements.define('tm-select-option', class extends LitElement {
 
 
   render() {
+    const {
+      titles
+    } = this;
     return html`
             <main>
                 <label>${this.label}</label>
                 <select id="select" @change="${e => this.selectedChanged()}" value="${this.value}">
                     <option selected disabled hidden></option>
-                    ${this.options.map(o => html`<option ?selected="${o === this.value}">${o}</option>`)}
+                    ${this.titles && this.values ? html`
+                        ${this.values.map((v, i) => html`<option ?selected="${v === this.value}" value="${v}">${titles[i]}</option>`)}
+                    ` : html``}
                 </select>            
             </main>
         `;
