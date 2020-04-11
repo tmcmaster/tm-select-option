@@ -25,35 +25,81 @@ window.customElements.define('tm-select-option', class extends LitElement {
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
         this.selected = this.shadowRoot.getElementById('select');
-        if (this.value !== undefined) {
-            this.selected.value = this.value;
+    }
+
+    // connectedCallback() {
+    //     super.connectedCallback();
+    //     this.selected = this.shadowRoot.getElementById('select');
+    // }
+
+    updated(_changedProperties) {
+        super.updated(_changedProperties);
+        console.log('TM-SELECT-UPDATE - updated', _changedProperties);
+
+        let requiresUpdate = false;
+
+        if (_changedProperties.has('titles') && this.titles && !this.options) {
+            if (!_changedProperties.has('values') || !this.values) {
+                this.values = this.titles;
+                requiresUpdate = true;
+                console.log('TM-SELECT-OPTION - updated values with titles');
+            }
         }
 
+        if (_changedProperties.has('values') && this.values && !this.options && !this.titles) {
+            if (!_changedProperties.has('titles') || !this.titles) {
+                this.titles = this.values;
+                requiresUpdate = true;
+                console.log('TM-SELECT-OPTION - updated titles with values');
+            }
+        }
 
-        if (this.options) {
-            this.values = [];
-            this.titles = [];
+        if (_changedProperties.has('options') && this.options) {
+            console.log('TM-SELECT-UPDATE - options updated', this.options, _changedProperties.get('options'));
 
             if (Array.isArray(this.options)) {
                 this.values = Object.values(this.options);
                 this.titles = Object.values(this.options);
+                console.log('TM-SELECT-OPTION - updated titles and values with options array');
             } else {
-                Object.keys(this.options)
-                    .map(key => {return {key: key, value: this.options[key]}})
-                    .sort((a,b) => a.key.localeCompare(b.value))
-                    .forEach(option => {
-                        this.values.push(option.key);
-                        this.titles.push(option.value);
-                    });
-                this.requestUpdate();
+                const values = [];
+                const titles = [];
+                Object.keys(this.options).map(key => {
+                    return {
+                        key: key,
+                        value: this.options[key]
+                    };
+                }).sort((a, b) => a.key.localeCompare(b.value)).forEach(option => {
+                    values.push(option.key);
+                    titles.push(option.value);
+                });
+                this.values = values;
+                this.titles = titles;
+
+                console.log('TM-SELECT-OPTION - updated titles and values with options map', this.options);
             }
-        } else {
-            if (!this.titles) {
-                this.titles = this.values;
-                this.requestUpdate();
-            }
+            requiresUpdate = true;
+            console.log('TM-SELECT-OPTION - DEBUG', this.titles, this.values, this.options);
+        }
+
+        if (_changedProperties.has('value') && this.selected) {
+            this.selected.value = (this.value ? this.value : '');
+            console.log('TM-SELECT-OPTION - updated selected value');
+            requiresUpdate = true;
+        }
+
+        if (_changedProperties.has('selected') && this.selected) {
+            this.selected.value = (this.value ? this.value : '');
+            console.log('TM-SELECT-OPTION - updated selected value');
+            requiresUpdate = true;
+        }
+
+        if (requiresUpdate) {
+            console.log('TM-SELECT-OPTION - Requesting UI updated.');
+            this.requestUpdate();
         }
     }
+
 
     static get styles() {
         // language=CSS

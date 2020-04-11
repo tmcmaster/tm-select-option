@@ -21,7 +21,7 @@ render(html`
     </style>
     <tm-examples heading="tm-select-option" .sites="${sites}">
         <section title="Not Selected">
-            <tm-select-option label="Testing" .values="${VALUES}"></tm-select-option>
+            <tm-select-option id="aaa" label="Testing" .values="${VALUES}"></tm-select-option>
         </section>
         <section title="Values">
             <tm-select-option label="Testing" value="b" .values="${VALUES}"></tm-select-option>
