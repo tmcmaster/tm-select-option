@@ -18,6 +18,10 @@ render(html`
           padding: 0;
           margin: 0;
         } 
+        
+        tm-select-option {
+            //--tm-select-option-background-color: lightblue;
+        }
     </style>
     <tm-examples heading="tm-select-option" .sites="${sites}">
         <section title="Not Selected">
