@@ -111,6 +111,7 @@ window.customElements.define('tm-select-option', class extends LitElement {
     return css`
             :host {
                 --background-color: var(--tm-select-option-background-color, inherit);
+                --color: var(--tm-select-option-color, grey);
 
                 display: inline-block;
                 box-sizing: border-box;
@@ -130,7 +131,7 @@ window.customElements.define('tm-select-option', class extends LitElement {
                 display: inline-block;
                 box-sizing: border-box;
                 font-size: 12px;
-                color: gray;
+                color: var(--color);
                 width: 100%;
                 height: 30%;
                 background-color: inherit;
@@ -149,7 +150,7 @@ window.customElements.define('tm-select-option', class extends LitElement {
                 box-sizing: border-box;
                 margin: 0;
                 border: none;
-                border-bottom: 1px solid #aaa;
+                border-bottom: 1px solid var(--color);
                 border-radius: 0;
                 -moz-appearance: none;
                 -webkit-appearance: none;
