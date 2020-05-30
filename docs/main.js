@@ -21,6 +21,7 @@ render(html`
         
         tm-select-option {
             //--tm-select-option-background-color: lightblue;
+            //--tm-select-option-color: red;
         }
     </style>
     <tm-examples heading="tm-select-option" .sites="${sites}">

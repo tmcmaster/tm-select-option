@@ -110,9 +110,11 @@ window.customElements.define('tm-select-option', class extends LitElement {
     // language=CSS
     return css`
             :host {
+                --background-color: var(--tm-select-option-background-color, inherit);
+
                 display: inline-block;
                 box-sizing: border-box;
-                background-color: rgb(244,244,244);
+                background-color: var(--background-color);
                 padding-bottom: 5px;
             }
             main {
@@ -131,6 +133,7 @@ window.customElements.define('tm-select-option', class extends LitElement {
                 color: gray;
                 width: 100%;
                 height: 30%;
+                background-color: inherit;
             }
             select {
                 display: inline-block;
@@ -151,9 +154,7 @@ window.customElements.define('tm-select-option', class extends LitElement {
                 -moz-appearance: none;
                 -webkit-appearance: none;
                 appearance: none;
-                background-color: #fff;
-                linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
-                background-color: rgb(244,244,244);
+                background-color: inherit;
             }
             select::-ms-expand {
                 display: none;
